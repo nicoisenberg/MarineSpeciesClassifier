@@ -3,7 +3,7 @@ import torch.nn as nn
 
 from src.dataset import create_dataloader, create_dataset, split_dataset
 from src.model import MarineClassifier
-from src.training import train_model
+from src.training import train_model, validate_model
 
 
 def main():
@@ -42,6 +42,9 @@ def main():
         shuffle=False
     )
 
+    for images, labels in training_dataloader:
+        print(labels)
+
     print(f"Batches of the training dataloader: {len(training_dataloader)}")
     print(f"Batches of the validation dataloader: {len(validation_dataloader)}")
     print(f"Batches of the test dataloader: {len(test_dataloader)}")
@@ -61,6 +64,12 @@ def main():
         loss_function=loss_function,
         optimizer=optimizer,
         epochs=20
+    )
+
+    model = validate_model(
+        model=model,
+        dataloader=validation_dataloader,
+        loss_function=loss_function
     )
     
 
