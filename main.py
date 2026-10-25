@@ -1,4 +1,9 @@
+import torch
+import torch.nn as nn
+
 from src.dataset import create_dataloader, create_dataset, split_dataset
+from src.model import MarineClassifier
+from src.training import train_model
 
 
 def main():
@@ -41,6 +46,23 @@ def main():
     print(f"Batches of the validation dataloader: {len(validation_dataloader)}")
     print(f"Batches of the test dataloader: {len(test_dataloader)}")
 
+    model = MarineClassifier()
+
+    optimizer = torch.optim.SGD(
+            model.parameters(),
+            lr=0.01
+    )   
+
+    loss_function = nn.CrossEntropyLoss()
+
+    model = train_model(
+        model=model,
+        dataloader=training_dataloader,
+        loss_function=loss_function,
+        optimizer=optimizer,
+        epochs=20
+    )
+    
 
 if __name__ == "__main__":
     main()
