@@ -60,7 +60,8 @@ def main():
 
     model = train_model(
         model=model,
-        dataloader=training_dataloader,
+        training_dataloader=training_dataloader,
+        validation_dataloader=validation_dataloader,
         loss_function=loss_function,
         optimizer=optimizer,
         epochs=20
